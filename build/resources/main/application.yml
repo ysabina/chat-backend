@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/chat  # your DB host/port/name
+    username: postgres                                # your DB user
+    password: 123456                              # your DB password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none      # let Flyway manage the schema
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+jwt:
+  secret: "u8XyVqZ0DWxQ9P1z6kOa9T4L63HJ3LZjfuwnRA7gK2o8"
+  expiration: 3600000
+
+logging:
+  level:
+    org.springframework: INFO
