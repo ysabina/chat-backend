@@ -1,0 +1,27 @@
+
+services:
+  pgdb-chat:
+    image: postgres:12.3-alpine
+    restart: always
+    ports:
+      - "5433:5432"                # hostPort:containerPort
+    environment:
+      POSTGRES_DB: chat            # ← creates the “chat” database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456    # ← that user’s password
+    #volumes:
+     # - ./pgdb:/docker-entrypoint-initdb.d:ro
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL:       jdbc:postgresql://db:5433/chat
+      SPRING_DATASOURCE_USERNAME:  postgres
+      SPRING_DATASOURCE_PASSWORD:  123456
+      JWT_SECRET:                 "u8XyVqZ0DWxQ9P1z6kOa9T4L63HJ3LZjfuwnRA7gK2o8"
+
+volumes:
+  db-data:
